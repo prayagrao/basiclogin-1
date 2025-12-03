@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Vehicle</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+  <h2>Book Vehicle</h2>
+
+  <form th:action="@{/confirmBooking}" th:object="${booking}" method="post">
+
+    <input type="hidden" th:field="*{vehicleName}" />
+
+    <div class="mb-3">
+      <label for="fromDate" class="form-label">From Date</label>
+      <input type="date" id="fromDate" th:field="*{fromDate}" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+      <label for="toDate" class="form-label">To Date</label>
+      <input type="date" id="toDate" th:field="*{toDate}" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+      <label for="licenseNumber" class="form-label">License Number</label>
+      <input type="text" id="licenseNumber" th:field="*{licenseNumber}" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-success">Confirm Booking</button>
+    <a href="/vehiclesList" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

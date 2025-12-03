@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Available Vehicles</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+
+    <!-- Top Buttons (Logout + View Bookings) -->
+    <div class="d-flex justify-content-end mb-4">
+
+        <a href="/user/bookings" class="btn btn-primary">View Bookings</a>
+        <a href="/vehiclesList" class="btn btn-info">View All Vehicles</a>
+        <a href="/logout" class="btn btn-danger me-2">Logout</a>
+    </div>
+
+    <!-- Welcome Section -->
+    <div class="mb-4">
+        <h1>Welcome, <span th:text="${username}">User</span>!</h1>
+    </div>
+
+    <!-- Booking Section (Initially Hidden) -->
+    <div id="bookingsSection" class="mb-4" style="display: none;">
+        <h2>Your Bookings:</h2>
+        <ul class="list-group">
+            <li class="list-group-item" th:each="booking : ${bookings}">
+                Vehicle: <span th:text="${booking.vehicleName}"></span> |
+                Date: <span th:text="${booking.bookingDate}"></span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Available Vehicles Section (Shown Directly) -->
+    <h2 class="text-center mb-4">Available Vehicles</h2>
+
+    <div class="row" th:if="${vehicles != null}">
+        <div class="col-md-4 mb-4" th:each="vehicle : ${vehicles}">
+            <div class="card shadow-sm h-100">
+                <img th:src="@{/vehicle/image/{id}(id=${vehicle.id})}" class="card-img-top" alt="Vehicle Image">
+                <div class="card-body text-center">
+                    <h5 class="card-title" th:text="${vehicle.name}">Vehicle Name</h5>
+                    <p class="card-text">
+                        Type: <span th:text="${vehicle.type}"></span><br>
+                        Price/Day: $<span th:text="${vehicle.pricePerDay}"></span>
+                    </p>
+                  <!--  <form th:action="@{/uploadImage}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" th:value="${vehicle.id}" />
+                        <div class="mb-2">
+                            <input type="file" name="file" class="form-control" accept="image/*" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm">Upload New Image</button>
+                    </form> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${vehicles == null or #lists.isEmpty(vehicles)}" class="text-center text-muted">
+        <p>No vehicles available at the moment.</p>
+    </div>
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Small JavaScript to toggle Bookings Section -->
+<script>
+    function toggleBookings() {
+        var bookingsSection = document.getElementById('bookingsSection');
+        if (bookingsSection.style.display === 'none') {
+            bookingsSection.style.display = 'block';
+        } else {
+            bookingsSection.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>
